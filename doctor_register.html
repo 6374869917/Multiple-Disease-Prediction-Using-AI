@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zxx">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="keywords"
+    content="Medick Responsive web template, Bootstrap Web Templates, Android Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+  <title>Doctor Details</title>
+  <style>
+    /* Include your styles here */
+    {% include 'css/style.css' %}
+  </style>
+  <link href="//fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body onload="populateDoctors()">
+  <!-- header -->
+  <script>
+    function flashMessage() {
+      if ("{{ flash_message }}" == "True") {
+        alert("{{ data }}");
+      }
+    }
+
+    // Predefined doctor data to load dynamically
+    const doctorData = [
+      { doctor_id: "D1001", doctor_name: "Dr. John Doe", disease: "Hypertension", specialist: "Cardiologist", fees: "1000", duration: "45", location: "City Medical Center, NY", latitude: "40.7128", longitude: "-74.0060", distance: "3", chat_link: "https://chat.example.com" },
+      { doctor_id: "D1002", doctor_name: "Dr. Sarah Lee", disease: "Diabetes", specialist: "Endocrinologist", fees: "1200", duration: "50", location: "EndoCare Clinic, LA", latitude: "34.0522", longitude: "-118.2437", distance: "5", chat_link: "https://chat.endo.com" },
+      { doctor_id: "D1003", doctor_name: "Dr. Michael Brown", disease: "Asthma", specialist: "Pulmonologist", fees: "1100", duration: "40", location: "Respira Clinic, SF", latitude: "37.7749", longitude: "-122.4194", distance: "2", chat_link: "https://chat.asthma.com" },
+      { doctor_id: "D1004", doctor_name: "Dr. Emma Watson", disease: "Cancer", specialist: "Oncologist", fees: "2500", duration: "60", location: "Cancer Care Center, Chicago", latitude: "41.8781", longitude: "-87.6298", distance: "4", chat_link: "https://chat.cancer.com" },
+      { doctor_id: "D1005", doctor_name: "Dr. David Miller", disease: "COVID-19", specialist: "Immunologist", fees: "2000", duration: "30", location: "ImmunoHealth Clinic, Boston", latitude: "42.3601", longitude: "-71.0589", distance: "6", chat_link: "https://chat.covid19.com" },
+      { doctor_id: "D1006", doctor_name: "Dr. Ava Johnson", disease: "Migraine", specialist: "Neurologist", fees: "1300", duration: "35", location: "NeuroCare Clinic, Miami", latitude: "25.7617", longitude: "-80.1918", distance: "5", chat_link: "https://chat.migraine.com" },
+      { doctor_id: "D1007", doctor_name: "Dr. Liam Smith", disease: "Arthritis", specialist: "Rheumatologist", fees: "1400", duration: "40", location: "Arthro Clinic, Denver", latitude: "39.7392", longitude: "-104.9903", distance: "7", chat_link: "https://chat.arthritis.com" },
+      { doctor_id: "D1008", doctor_name: "Dr. Isabella Davis", disease: "Pneumonia", specialist: "Pulmonologist", fees: "1100", duration: "50", location: "Pneuma Health Center, Atlanta", latitude: "33.7490", longitude: "-84.3880", distance: "3", chat_link: "https://chat.pneumonia.com" },
+      { doctor_id: "D1009", doctor_name: "Dr. Noah Martinez", disease: "Stroke", specialist: "Neurologist", fees: "1800", duration: "45", location: "NeuroCare Institute, Seattle", latitude: "47.6062", longitude: "-122.3321", distance: "6", chat_link: "https://chat.stroke.com" },
+      { doctor_id: "D1010", doctor_name: "Dr. Olivia Wilson", disease: "Obesity", specialist: "Endocrinologist", fees: "1500", duration: "40", location: "Slim Clinic, Houston", latitude: "29.7604", longitude: "-95.3698", distance: "4", chat_link: "https://chat.obesity.com" },
+      { doctor_id: "D1011", doctor_name: "Dr. Ethan Moore", disease: "Chronic Pain", specialist: "Pain Management", fees: "1600", duration: "50", location: "Pain Relief Center, Phoenix", latitude: "33.4484", longitude: "-112.0740", distance: "5", chat_link: "https://chat.pain.com" },
+      { doctor_id: "D1012", doctor_name: "Dr. Sophia Taylor", disease: "Eczema", specialist: "Dermatologist", fees: "1300", duration: "40", location: "SkinCare Clinic, Dallas", latitude: "32.7767", longitude: "-96.7970", distance: "3", chat_link: "https://chat.eczema.com" },
+      { doctor_id: "D1013", doctor_name: "Dr. Mason Harris", disease: "Chronic Fatigue", specialist: "Internal Medicine", fees: "1400", duration: "35", location: "Wellness Clinic, San Diego", latitude: "32.7157", longitude: "-117.1611", distance: "2", chat_link: "https://chat.fatigue.com" },
+      { doctor_id: "D1014", doctor_name: "Dr. Harper Clark", disease: "Sleep Apnea", specialist: "Pulmonologist", fees: "1200", duration: "40", location: "Sleep Health Center, Orlando", latitude: "28.5383", longitude: "-81.3792", distance: "6", chat_link: "https://chat.sleep.com" },
+      { doctor_id: "D1015", doctor_name: "Dr. Jack Lewis", disease: "Kidney Disease", specialist: "Nephrologist", fees: "2000", duration: "55", location: "Kidney Care, Detroit", latitude: "42.3314", longitude: "-83.0458", distance: "7", chat_link: "https://chat.kidney.com" },
+      { doctor_id: "D1016", doctor_name: "Dr. Mia Walker", disease: "Thyroid Disorder", specialist: "Endocrinologist", fees: "1500", duration: "45", location: "Thyroid Care Clinic, Portland", latitude: "45.5152", longitude: "-122.6784", distance: "4", chat_link: "https://chat.thyroid.com" },
+      { doctor_id: "D1017", doctor_name: "Dr. Alexander Scott", disease: "Asthma", specialist: "Pulmonologist", fees: "1000", duration: "30", location: "Asthma Clinic, Austin", latitude: "30.2672", longitude: "-97.7431", distance: "3", chat_link: "https://chat.asthma.com" },
+      { doctor_id: "D1018", doctor_name: "Dr. Charlotte Rodriguez", disease: "Cancer", specialist: "Oncologist", fees: "2200", duration: "60", location: "Cancer Institute, New York", latitude: "40.7306", longitude: "-73.9352", distance: "5", chat_link: "https://chat.cancer.com" },
+      { doctor_id: "D1019", doctor_name: "Dr. Benjamin Walker", disease: "Gastroenteritis", specialist: "Gastroenterologist", fees: "1400", duration: "40", location: "Digestive Care Center, Tampa", latitude: "27.9506", longitude: "-82.4572", distance: "4", chat_link: "https://chat.gastro.com" },
+      { doctor_id: "D1020", doctor_name: "Dr. Lily Young", disease: "Pneumonia", specialist: "Pulmonologist", fees: "1300", duration: "50", location: "Pneuma Health Center, Sacramento", latitude: "38.5816", longitude: "-121.4944", distance: "6", chat_link: "https://chat.pneumonia.com" },
+      { doctor_id: "D1021", doctor_name: "Dr. Samuel Green", disease: "Hypertension", specialist: "Cardiologist", fees: "1500", duration: "45", location: "Heart Care Center, Las Vegas", latitude: "36.1699", longitude: "-115.1398", distance: "3", chat_link: "https://chat.hypertension.com" },
+      { doctor_id: "D1022", doctor_name: "Dr. Grace Adams", disease: "Chronic Bronchitis", specialist: "Pulmonologist", fees: "1100", duration: "40", location: "Lung Health Center, Minneapolis", latitude: "44.9778", longitude: "-93.2650", distance: "5", chat_link: "https://chat.bronchitis.com" },
+      { doctor_id: "D1023", doctor_name: "Dr. Henry Nelson", disease: "Sepsis", specialist: "Infectious Disease", fees: "2500", duration: "60", location: "Sepsis Care Center, Phoenix", latitude: "33.4484", longitude: "-112.0740", distance: "7", chat_link: "https://chat.sepsis.com" },
+      { doctor_id: "D1024", doctor_name: "Dr. Emily King", disease: "Migraine", specialist: "Neurologist", fees: "1300", duration: "35", location: "NeuroClinic, Salt Lake City", latitude: "40.7608", longitude: "-111.8910", distance: "4", chat_link: "https://chat.migraine.com" },
+      { doctor_id: "D1025", doctor_name: "Dr. Thomas Wright", disease: "Anxiety", specialist: "Psychiatrist", fees: "1400", duration: "50", location: "Mental Health Center, Chicago", latitude: "41.8781", longitude: "-87.6298", distance: "6", chat_link: "https://chat.anxiety.com" },
+      { doctor_id: "D1026", doctor_name: "Dr. Zoe Allen", disease: "Depression", specialist: "Psychologist", fees: "1200", duration: "40", location: "PsychCare, Boston", latitude: "42.3601", longitude: "-71.0589", distance: "5", chat_link: "https://chat.depression.com" },
+      { doctor_id: "D1027", doctor_name: "Dr. Max Harris", disease: "COPD", specialist: "Pulmonologist", fees: "1800", duration: "60", location: "Breath Easy Clinic, Nashville", latitude: "36.1627", longitude: "-86.7816", distance: "7", chat_link: "https://chat.copd.com" },
+      { doctor_id: "D1028", doctor_name: "Dr. Chloe Robinson", disease: "Allergy", specialist: "Allergist", fees: "900", duration: "30", location: "Allergy Care, Raleigh", latitude: "35.7796", longitude: "-78.6382", distance: "3", chat_link: "https://chat.allergy.com" },
+      { doctor_id: "D1029", doctor_name: "Dr. Isaac White", disease: "Parkinson's", specialist: "Neurologist", fees: "2500", duration: "60", location: "NeuroPark Clinic, Philadelphia", latitude: "39.9526", longitude: "-75.1652", distance: "6", chat_link: "https://chat.parkinsons.com" },
+      { doctor_id: "D1030", doctor_name: "Dr. Amelia Turner", disease: "Alzheimer's", specialist: "Geriatric Specialist", fees: "2200", duration: "50", location: "Alzheimer's Care, San Francisco", latitude: "37.7749", longitude: "-122.4194", distance: "4", chat_link: "https://chat.alzheimers.com" }
+    ];
+
+    // Function to populate doctors' details
+    function populateDoctors() {
+      let formHTML = "";
+      doctorData.forEach((doctor, index) => {
+        formHTML += `
+          <tr>
+            <td>Doctor ID</td>
+            <td><input name="doctor_id" type="text" id="doctor_id" value="${doctor.doctor_id}" required=""></td>
+          </tr>
+          <tr>
+            <td>Doctor Name</td>
+            <td><input name="doctor_name" type="text" id="doctor_name" value="${doctor.doctor_name}" required=""></td>
+          </tr>
+          <tr>
+            <td>Disease</td>
+            <td><input name="disease" type="text" id="disease" value="${doctor.disease}" required=""></td>
+          </tr>
+          <tr>
+            <td>Specialist</td>
+            <td><input name="specialist" type="text" id="specialist" value="${doctor.specialist}" required=""></td>
+          </tr>
+          <tr>
+            <td>Fees</td>
+            <td><input name="fees" type="text" id="fees" value="${doctor.fees}" required=""></td>
+          </tr>
+          <tr>
+            <td>Duration (Minutes)</td>
+            <td><input name="duration" type="text" id="duration" value="${doctor.duration}" required=""></td>
+          </tr>
+          <tr>
+            <td>Location</td>
+            <td><input name="location" type="text" id="location" value="${doctor.location}" required=""></td>
+          </tr>
+          <tr>
+            <td>Latitude</td>
+            <td><input name="latitude" type="text" id="latitude" value="${doctor.latitude}" required=""></td>
+          </tr>
+          <tr>
+            <td>Longitude</td>
+            <td><input name="longitude" type="text" id="longitude" value="${doctor.longitude}" required=""></td>
+          </tr>
+          <tr>
+            <td>Distance (km)</td>
+            <td><input name="distance" type="text" id="distance" value="${doctor.distance}" required=""></td>
+          </tr>
+          <tr>
+            <td>Chat Link</td>
+            <td><input name="chat_link" type="text" id="chat_link" value="${doctor.chat_link}" required=""></td>
+          </tr>
+        `;
+      });
+      document.getElementById("doctorForm").innerHTML = formHTML;
+    }
+  </script>
+
+  <div class="header-w3l">
+    <header id="site-header" class="fixed-top">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg stroke">
+          <a class="navbar-brand" href="#">Multi Disease <span class="sub-logo">Prediction</span></a>
+          <button class="navbar-toggler collapsed bg-gradient" type="button" data-toggle="collapse"
+            data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+            <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mx-lg-auto">
+              {% include 'menu/doctormenu.html' %}
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+  </div>
+
+  <div class="breadcrumb-bg w3l-inner-page-breadcrumb py-5">
+    <div class="container pt-lg-5 pt-md-3 p-lg-4 pb-md-3 my-lg-3">
+    </div>
+  </div>
+
+  <div class="position-relative">
+    <div class="shape overflow-hidden">
+      <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Train Data Section -->
+  <section class="w3l-team">
+    <div class="team py-5">
+      <div class="container py-lg-5 py-md-4">
+        <div class="title-content text-center">
+          <h3 align="center" class="title-w3l mb-sm-3 text-center">Doctor Registration</h3>
+        </div>
+
+        <!-- Doctor Registration Form -->
+        <form name="form1" method="post" action="/doctor_train_data">
+          <table height="127" align="center" id="doctorForm">
+            <!-- Pre-filled doctor data will be inserted here by JavaScript -->
+          </table>
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+    </div>
+  </section>
+
+</body>
+
+</html>
+
